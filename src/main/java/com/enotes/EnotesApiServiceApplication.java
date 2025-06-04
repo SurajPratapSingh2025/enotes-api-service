@@ -11,8 +11,12 @@ public class EnotesApiServiceApplication {
 		
 		SpringApplication.run(EnotesApiServiceApplication.class, args);
 		
+		System.out.println("===============================================================================================================================");
 		
-		System.out.println("my applicatoin is running");
+		System.out.println("================================================== my applicatoin is running ==================================================");
+		
+		System.out.println("================================================================================================================================");
+		
 	}
 
 }
