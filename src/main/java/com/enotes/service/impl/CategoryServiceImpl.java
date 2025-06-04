@@ -2,9 +2,12 @@ package com.enotes.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
+import com.enotes.dto.CategoryDto;
+import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
 import com.enotes.repository.CategoryRepository;
 import com.enotes.service.CategoryService;
@@ -14,8 +17,32 @@ public class CategoryServiceImpl implements CategoryService{
 	@Autowired
 	private CategoryRepository categoryRepo;
 	
+	@Autowired
+	private ModelMapper mapper;
+	
 	@Override
+<<<<<<< Updated upstream
 	public Boolean saveCategory(Category category) {
+=======
+	public Boolean saveCategory(CategoryDto categoryDto) {
+		
+//		Category category=new Category();
+//		category.setName(categoryDto.getName());
+//		category.setDescription(categoryDto.getDescription());
+//		category.setIsActive(categoryDto.getIsActive());
+		
+		
+		Category category = mapper.map(categoryDto, Category.class);
+		
+		
+		
+		
+		
+		
+		category.setIsDeleted(false);
+		category.setCreatedBy(1);
+		category.setCreatedOn(new Date());
+>>>>>>> Stashed changes
 		Category saveCategory=categoryRepo.save(category);
 		if(ObjectUtils.isEmpty(saveCategory)) {
 			return false;
@@ -24,9 +51,27 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
+<<<<<<< Updated upstream
 	public List<Category> getAllCatory() {
+=======
+	public List<CategoryDto> getAllCategory() {
+		
+>>>>>>> Stashed changes
 		List<Category> categories=categoryRepo.findAll();
-		return categories;
+		
+		List<CategoryDto> categoryDtoList = categories.stream().map(cat->mapper.map(cat, CategoryDto.class)).toList();
+		
+		
+		return categoryDtoList;
+	}
+
+	@Override
+	public List<CategoryResponse> getActiveCategory() {
+		
+		List<Category> categories=categoryRepo.findByIsActiveTrue();
+		List<CategoryResponse> categoryList = categories.stream().map(cat->mapper.map(cat, CategoryResponse.class)).toList();
+		
+		return categoryList;
 	}
 	
 }
