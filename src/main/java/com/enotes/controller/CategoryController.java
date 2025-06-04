@@ -33,7 +33,7 @@ public class CategoryController {
 	
 	@GetMapping("/category")
 	public ResponseEntity<?> getAllCategory(@RequestBody Category category){
-		List<Category> allCategory=categoryService.getAllCatory();
+		List<Category> allCategory=categoryService.getAllCategory();
 		
 		if(CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();

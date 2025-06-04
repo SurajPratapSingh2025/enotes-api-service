@@ -12,9 +12,15 @@ import lombok.Setter;
 public class BaseMode {
 	
 	private Boolean isActive;
+	
 	private Boolean isDeleted;
+	
 	private Integer createdBy;
+	
 	private Date createdOn;
+	
 	private Integer updatedBy;
+	
 	private Date updatedOn;
+	
 }

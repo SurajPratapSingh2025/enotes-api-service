@@ -1,7 +1,5 @@
 package com.enotes.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +18,10 @@ public class Category extends BaseMode{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String name;
+	
 	private String description;
+	
+	
 }
