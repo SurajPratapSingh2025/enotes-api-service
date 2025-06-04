@@ -18,6 +18,7 @@ import com.enotes.service.CategoryService;
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
+	
 	@Autowired
 	private CategoryService categoryService;
 	
@@ -32,8 +33,8 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/category")
-	public ResponseEntity<?> getAllCategory(@RequestBody Category category){
-		List<Category> allCategory=categoryService.getAllCatory();
+	public ResponseEntity<?> getAllCategory(){
+		List<Category> allCategory=categoryService.getAllCategory();
 		
 		if(CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();
