@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
-import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.CategoryService;
+import com.enotes.util.CommonUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,25 +32,27 @@ public class CategoryController {
 	
 	@PostMapping("/save")
 	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto){
+		
 		Boolean saveCategory = categoryService.saveCategory(categoryDto);
 		if(saveCategory) {
-			return new ResponseEntity<>("saved success",HttpStatus.CREATED);
+			return CommonUtil.createdBuildResponseMessage("saved success", HttpStatus.CREATED);
+//			return new ResponseEntity<>("saved success",HttpStatus.CREATED);
 		}else {
-			return new ResponseEntity<>("not savaed",HttpStatus.INTERNAL_SERVER_ERROR);
+			return CommonUtil.createdErrorResponseMessage("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
+//			return new ResponseEntity<>("not savaed",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/")
 	public ResponseEntity<?> getAllCategory(){
 		
-//		String nm=null;
-//		nm.toUpperCase();
 		List<CategoryDto> allCategory=categoryService.getAllCategory();
 		
 		if(CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();
 		}else {
-			return new ResponseEntity<>(allCategory,HttpStatus.OK);
+			return CommonUtil.createdBuildResponse(allCategory, HttpStatus.OK);
+//			return new ResponseEntity<>(allCategory,HttpStatus.OK);
 		}
 	}
 	
@@ -62,7 +64,8 @@ public class CategoryController {
 		if(CollectionUtils.isEmpty(allCategory)) {
 			return ResponseEntity.noContent().build();
 		}else {
-			return new ResponseEntity<>(allCategory,HttpStatus.OK);
+			return CommonUtil.createdBuildResponse(allCategory, HttpStatus.OK);
+//			return new ResponseEntity<>(allCategory,HttpStatus.OK);
 		}
 	}
 	
@@ -73,9 +76,11 @@ public class CategoryController {
 		
 		CategoryDto categoryDto = categoryService.getCategoryById(id);
 		if(ObjectUtils.isEmpty(categoryDto)) {
-			return new ResponseEntity<> ("Internal Server Error", HttpStatus.NOT_FOUND);
+			return CommonUtil.createdErrorResponseMessage("Internal Server Error", HttpStatus.NOT_FOUND);
+//			return new ResponseEntity<> ("Internal Server Error", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<> (categoryDto, HttpStatus.OK);
+		return CommonUtil.createdBuildResponse(categoryDto, HttpStatus.OK);
+//		return new ResponseEntity<> (categoryDto, HttpStatus.OK);
 		
 		
 	}
@@ -86,9 +91,11 @@ public class CategoryController {
 		
 		Boolean deleted = categoryService.deleteCategory(id);
 		if(deleted) {
-			return new ResponseEntity<> ("Category deleted success", HttpStatus.OK);
+			return CommonUtil.createdBuildResponse("Category deleted success", HttpStatus.OK);
+//			return new ResponseEntity<> ("Category deleted success", HttpStatus.OK);
 		}
-		return new ResponseEntity<> ("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
+		return CommonUtil.createdErrorResponseMessage("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
+//		return new ResponseEntity<> ("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	
