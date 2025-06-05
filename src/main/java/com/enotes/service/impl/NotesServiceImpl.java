@@ -1,6 +1,8 @@
 package com.enotes.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDto;
@@ -97,9 +100,9 @@ public class NotesServiceImpl implements NotesService{
 			String originalFilename = file.getOriginalFilename();
 			String extension = FilenameUtils.getExtension(originalFilename);
 			
-			List<String> extensionAllow = Arrays.asList("pdf","xlsx","jpg");
+			List<String> extensionAllow = Arrays.asList("pdf","xlsx","txt","png","jpg","jpeg");
 			if(!extensionAllow.contains(extension)) {
-				throw new IllegalArgumentException("invalid file format ! Upload only .pdf, .xlsx, .jpg");
+				throw new IllegalArgumentException("invalid file format ! Upload only .pdf, .xlsx, .jpg, .png, .txt");
 			}
 		
 			String rndString = UUID.randomUUID().toString();
@@ -170,5 +173,36 @@ public class NotesServiceImpl implements NotesService{
 		
 		
 	}
+
+
+
+	
+	@Override
+	public byte[] downloadFile(FileDetails fileDetails) throws Exception {
+		
+		InputStream io = new FileInputStream(fileDetails.getPath());
+		
+		return StreamUtils.copyToByteArray(io);
+	}
+
+
+
+	@Override
+	public FileDetails getFileDetails(Integer id) throws Exception {
+		FileDetails fileDtls;
+		try {
+			fileDtls = fileRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("File is not available"));
+			return fileDtls;
+		} catch (ResourceNotFoundException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
+
+
+	
 
 }
