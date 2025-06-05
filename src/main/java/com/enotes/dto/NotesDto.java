@@ -30,6 +30,20 @@ private Integer id;
 	
 	private Date updatedOn;
 	
+	private FilesDto fileDetails;
+	
+	@Setter
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class FilesDto{
+		private Integer id;
+		
+		private String originalFileName;
+		
+		private String displayFileName;
+	}
+	
 	@Setter
 	@Getter
 	@NoArgsConstructor
