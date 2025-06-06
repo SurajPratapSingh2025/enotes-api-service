@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.enotes.dto.FavouriteNoteDto;
 import com.enotes.dto.NotesDto;
 import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FileDetails;
@@ -29,5 +30,15 @@ public interface NotesService {
 	public void hardDeleteNotes(Integer id) throws Exception;
 
 	public void emptyRecycleBin(int userId);
+	
+	public void favouriteNotes(Integer noteId) throws Exception;
+	
+	public void unFavoriteNotes(Integer noteId) throws Exception;
+	
+	
+
+	List<FavouriteNoteDto> getUserFavouriteNotes() throws Exception;
+	
+	
 
 }
