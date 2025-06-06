@@ -135,7 +135,7 @@ public class NotesController {
 	
 	
 
-	@DeleteMapping("/fav/{noteId}")
+	@GetMapping("/fav/{noteId}")
 	public ResponseEntity<?> favouriteNote(@PathVariable Integer noteId) throws Exception{
 		
 		
@@ -155,7 +155,7 @@ public class NotesController {
 	}
 	
 
-	@DeleteMapping("/fav-note")
+	@GetMapping("/fav-note")
 	public ResponseEntity<?> getUserFavoriteNote() throws Exception{
 		
 		List<FavouriteNoteDto> userFavoriteNotes = notesService.getUserFavouriteNotes();
@@ -166,17 +166,17 @@ public class NotesController {
 		return CommonUtil.createdBuildResponseMessage("Delete Success", HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@GetMapping("/copy/{id}")
+	public ResponseEntity<?> copyNotes(@PathVariable Integer id) throws Exception{
+		
+		Boolean copyNotes = notesService.copyNotes(id);
+		if(copyNotes) {
+			return CommonUtil.createdBuildResponseMessage("Copied Success", HttpStatus.CREATED);
+		}
+		return CommonUtil.createdErrorResponseMessage("Copy failed ! Try Again", HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
 	
 	
 	
