@@ -32,6 +32,10 @@ private Integer id;
 	
 	private FilesDto fileDetails;
 	
+	private Boolean isDeleted;
+	
+	private Date deletedOn;
+	
 	@Setter
 	@Getter
 	@NoArgsConstructor
