@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDto;
 import com.enotes.dto.NotesDto.CategoryDto;
+import com.enotes.dto.NotesDto.FilesDto;
 import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FileDetails;
 import com.enotes.entity.Notes;
@@ -62,7 +63,10 @@ public class NotesServiceImpl implements NotesService{
 		ObjectMapper ob=new ObjectMapper();
 		NotesDto notesDto = ob.readValue(notes, NotesDto.class);
 		
-		
+		//update notes if id is given in request
+		if(!ObjectUtils.isEmpty(notesDto.getId())) {
+			updateNotes(notesDto,file);
+		}
 		
 		
 		
@@ -77,7 +81,9 @@ public class NotesServiceImpl implements NotesService{
 		if(!ObjectUtils.isEmpty(fileDtls)) {
 			notesMap.setFileDetails(fileDtls);
 		}else {
-			notesMap.setFileDetails(null);
+			if(ObjectUtils.isEmpty(notesDto.getId())) {
+				notesMap.setFileDetails(null);
+			}
 		}
 		
 		
@@ -96,6 +102,17 @@ public class NotesServiceImpl implements NotesService{
 	}
 
 	
+
+	private void updateNotes(NotesDto notesDto, MultipartFile file) throws Exception {
+		
+		Notes existNotes = notesRepo.findById(notesDto.getId()).orElseThrow(()->new ResourceNotFoundException("Invalid Notes id"));
+		//user not chooose any file at update time
+		if(ObjectUtils.isEmpty(file)) {
+			notesDto.setFileDetails(mapper.map(existNotes.getFileDetails(), FilesDto.class));
+		}
+	}
+
+
 
 	private FileDetails saveFileDetails(MultipartFile file) throws Exception {
 		
