@@ -1,5 +1,6 @@
 package com.enotes.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ private Integer id;
 	
 	private Boolean isDeleted;
 	
-	private Date deletedOn;
+	private LocalDateTime deletedOn;
 	
 	@Setter
 	@Getter
