@@ -1,7 +1,6 @@
 package com.enotes.entity;
 
 import java.util.List;
-import com.enotes.entity.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
