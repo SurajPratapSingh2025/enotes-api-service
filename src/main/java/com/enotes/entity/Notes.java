@@ -43,3 +43,6 @@ public class Notes extends BaseModel{
 	
 	private LocalDateTime deletedOn;
 }
+
+
+

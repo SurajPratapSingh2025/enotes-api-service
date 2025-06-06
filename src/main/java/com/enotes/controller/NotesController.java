@@ -182,12 +182,4 @@ public class NotesController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-
 }

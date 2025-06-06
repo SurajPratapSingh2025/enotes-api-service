@@ -33,3 +33,5 @@ public class Category extends BaseModel{
 	private Boolean isDeleted;
 	
 }
+
+
