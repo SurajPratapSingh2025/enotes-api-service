@@ -7,3 +7,5 @@ import com.enotes.entity.FileDetails;
 public interface FileRepository extends JpaRepository<FileDetails,Integer>{
 
 }
+
+

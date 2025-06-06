@@ -11,3 +11,5 @@ public interface TodoRepository extends JpaRepository<Todo,Integer>{
 	List<Todo> findByCreatedBy(Integer userId);
 
 }
+
+

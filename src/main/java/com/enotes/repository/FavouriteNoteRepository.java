@@ -10,3 +10,5 @@ public interface FavouriteNoteRepository extends JpaRepository<FavouriteNote,Int
 	
 	List<FavouriteNote> findByUserId(int userId);
 }
+
+

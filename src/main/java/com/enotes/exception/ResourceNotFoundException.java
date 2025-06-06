@@ -7,3 +7,5 @@ public class ResourceNotFoundException extends Exception{
 		super(message);
 	}
 }
+
+
