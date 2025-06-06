@@ -1,0 +1,27 @@
+package com.enotes.schedular;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import com.enotes.entity.Notes;
+import com.enotes.repository.NotesRepository;
+
+public class NotesSchedular {
+	
+	@Autowired
+	private NotesRepository notesRepo;
+	
+//	@Scheduled(cron="0 0 0 * * ?")
+	@Scheduled(cron="* * * ? * *")
+	public void deleteNotesSchdular() {
+		
+		LocalDateTime cutOffDate = LocalDateTime.now().minusDays(7);
+		List<Notes> deleteNotes = notesRepo.findAllByIsDeletedAndDeletedOnBefore(true,cutOffDate);
+		notesRepo.deleteAll(deleteNotes);
+		
+	}
+	
+}
