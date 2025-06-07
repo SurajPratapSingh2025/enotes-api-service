@@ -9,11 +9,13 @@ import java.util.Map;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.enotes.entity.User;
 import com.enotes.service.JwtService;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -49,7 +51,7 @@ public class JwtServiceImpl implements JwtService{
 		.claims().add(claims)
 		.subject(user.getEmail())
 		.issuedAt(new Date(System.currentTimeMillis()))
-		.expiration(new Date(System.currentTimeMillis()+60*60*10)).and()
+		.expiration(new Date(System.currentTimeMillis()+60*60*60*10)).and()
 		.signWith(getKey())
 		.compact();
 		
@@ -60,7 +62,54 @@ public class JwtServiceImpl implements JwtService{
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
+
+	@Override
+	public String extractUsername(String token) {
+		
+		Claims claims=extractAllClaims(token);
+		return claims.getSubject();
+	}
 	
+	public String role(String token) {
+		Claims claims=extractAllClaims(token);
+		String role=(String)claims.get("role");
+		return role;
+	}
+	
+	
+	private Claims extractAllClaims(String token) {
+		Claims claims=Jwts.parser()
+				.verifyWith(decrytKey(secretKey))
+				.build().parseSignedClaims(token).getPayload();
+		return claims;
+	}
+	
+	private SecretKey decrytKey(String secretKey) {
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+
+	@Override
+	public Boolean validateToken(String token, UserDetails userDetails) {
+		
+		String username=extractUsername(token);
+		Boolean isExpired=isTokenExpired(token);
+		
+		if(username.equalsIgnoreCase(userDetails.getUsername()) && !isExpired) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private Boolean isTokenExpired(String token) {
+		Claims claims=extractAllClaims(token);
+		Date expiredDate=claims.getExpiration();
+		
+		
+		return expiredDate.before(new Date());
+	}
 	
 	
 	
