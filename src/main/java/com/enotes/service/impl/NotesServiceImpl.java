@@ -37,6 +37,7 @@ import com.enotes.repository.FavouriteNoteRepository;
 import com.enotes.repository.FileRepository;
 import com.enotes.repository.NotesRepository;
 import com.enotes.service.NotesService;
+import com.enotes.util.CommonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -235,9 +236,10 @@ public class NotesServiceImpl implements NotesService{
 
 
 	@Override
-	public NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize) {
+	public NotesResponse getAllNotesByUser(Integer pageNo, Integer pageSize) {
 		//10 = 5,5 = 2 pages
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
+		Integer userId=CommonUtil.getLoggedInUser().getId();
 		Page<Notes> pageNotes = notesRepo.findByCreatedByAndIsDeletedFalse(userId,pageable);
 		
 		List<NotesDto> notesDto = pageNotes.get().map(n->mapper.map(n, NotesDto.class)).toList();
@@ -284,8 +286,8 @@ public class NotesServiceImpl implements NotesService{
 
 
 	@Override
-	public List<NotesDto> getUserRecycleBinNotes(Integer userId) {
-		
+	public List<NotesDto> getUserRecycleBinNotes() {
+		Integer userId=CommonUtil.getLoggedInUser().getId();
 		List<Notes> recycleNotes = notesRepo.findByCreatedByAndIsDeletedTrue(userId);
 		List<NotesDto> notesDtoList = recycleNotes.stream().map(note->mapper.map(note,NotesDto.class)).toList();
 		
@@ -310,8 +312,8 @@ public class NotesServiceImpl implements NotesService{
 
 
 	@Override
-	public void emptyRecycleBin(int userId) {
-		
+	public void emptyRecycleBin() {
+		Integer userId=CommonUtil.getLoggedInUser().getId();
 		List<Notes> recylceNotes = notesRepo.findByCreatedByAndIsDeletedTrue(userId);
 		if(!CollectionUtils.isEmpty(recylceNotes)) {
 			notesRepo.deleteAll(recylceNotes);
@@ -324,7 +326,7 @@ public class NotesServiceImpl implements NotesService{
 	@Override
 	public void favouriteNotes(Integer noteId) throws Exception {
 		
-		int userId=2;
+		Integer userId=CommonUtil.getLoggedInUser().getId();
 		Notes notes=notesRepo.findById(noteId)
 				.orElseThrow(()->new ResourceNotFoundException("Notes Not Found & Id Invalid"));
 		FavouriteNote favouriteNote = FavouriteNote.builder()

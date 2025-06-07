@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.LoginRequest;
 import com.enotes.dto.LoginResponse;
-import com.enotes.dto.UserDto;
+import com.enotes.dto.UserRequest;
 import com.enotes.exception.GlobalExceptionHandler;
 import com.enotes.service.UserService;
 import com.enotes.util.CommonUtil;
@@ -32,7 +32,7 @@ public class AuthController {
     }
 	
 	@PostMapping("/")
-	public ResponseEntity<?> registerUser(@RequestBody UserDto userDto,HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> registerUser(@RequestBody UserRequest userDto,HttpServletRequest request) throws Exception{
 		String url = CommonUtil.getUrl(request);
 		Boolean register=userService.register(userDto,url);
 		if(register) {
