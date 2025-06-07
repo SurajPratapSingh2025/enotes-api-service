@@ -27,5 +27,5 @@ public class AccountStatus {
 	
 	private String verifictionCode;
 	
-
+	private String passwordResetToken;
 }
