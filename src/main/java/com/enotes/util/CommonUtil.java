@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.enotes.handler.GenericResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public class CommonUtil {
 	
 	public static ResponseEntity<?> createdBuildResponse(Object data,HttpStatus status){
@@ -74,6 +76,14 @@ public class CommonUtil {
 			
 		}
 		
+	}
+
+
+	public static String getUrl(HttpServletRequest request) {
+		
+		String apiUrl=request.getRequestURL().toString();		//http:localhost:9090/api/v1/auth
+		apiUrl=apiUrl.replace(request.getServletPath(), "");	//http:localhost:9090
+		return apiUrl;
 	}
 	
 	
