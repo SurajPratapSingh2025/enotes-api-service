@@ -13,9 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.enotes.entity.User;
+import com.enotes.exception.JwtTokenExpiredException;
 import com.enotes.service.JwtService;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -64,24 +67,36 @@ public class JwtServiceImpl implements JwtService{
 	}
 
 	@Override
-	public String extractUsername(String token) {
+	public String extractUsername(String token) throws Exception {
 		
 		Claims claims=extractAllClaims(token);
 		return claims.getSubject();
 	}
 	
-	public String role(String token) {
+	public String role(String token) throws Exception {
 		Claims claims=extractAllClaims(token);
 		String role=(String)claims.get("role");
 		return role;
 	}
 	
 	
-	private Claims extractAllClaims(String token) {
-		Claims claims=Jwts.parser()
-				.verifyWith(decrytKey(secretKey))
-				.build().parseSignedClaims(token).getPayload();
-		return claims;
+	private Claims extractAllClaims(String token) throws Exception {
+		try {
+			return Jwts.parser()
+					.verifyWith(decrytKey(secretKey))
+					.build().parseSignedClaims(token).getPayload();
+		} 
+		catch(ExpiredJwtException e) {
+			throw new JwtTokenExpiredException("Token is expired");
+		}
+		catch(JwtException e) {
+			throw new JwtTokenExpiredException("Invalid Jwt token");
+		}
+		catch (Exception e) {
+			throw e;
+			
+		}
+		
 	}
 	
 	private SecretKey decrytKey(String secretKey) {
@@ -91,7 +106,7 @@ public class JwtServiceImpl implements JwtService{
 	}
 
 	@Override
-	public Boolean validateToken(String token, UserDetails userDetails) {
+	public Boolean validateToken(String token, UserDetails userDetails) throws Exception{
 		
 		String username=extractUsername(token);
 		Boolean isExpired=isTokenExpired(token);
@@ -103,7 +118,7 @@ public class JwtServiceImpl implements JwtService{
 		return false;
 	}
 	
-	private Boolean isTokenExpired(String token) {
+	private Boolean isTokenExpired(String token) throws Exception {
 		Claims claims=extractAllClaims(token);
 		Date expiredDate=claims.getExpiration();
 		
