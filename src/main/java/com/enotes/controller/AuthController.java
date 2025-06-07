@@ -13,7 +13,7 @@ import com.enotes.dto.LoginRequest;
 import com.enotes.dto.LoginResponse;
 import com.enotes.dto.UserRequest;
 import com.enotes.exception.GlobalExceptionHandler;
-import com.enotes.service.UserService;
+import com.enotes.service.AuthService;
 import com.enotes.util.CommonUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AuthController {
     private final GlobalExceptionHandler globalExceptionHandler;
 	
 	@Autowired
-	private UserService userService;
+	private AuthService authService;
 
     AuthController(GlobalExceptionHandler globalExceptionHandler) {
         this.globalExceptionHandler = globalExceptionHandler;
@@ -34,7 +34,7 @@ public class AuthController {
 	@PostMapping("/")
 	public ResponseEntity<?> registerUser(@RequestBody UserRequest userDto,HttpServletRequest request) throws Exception{
 		String url = CommonUtil.getUrl(request);
-		Boolean register=userService.register(userDto,url);
+		Boolean register=authService.register(userDto,url);
 		if(register) {
 			return CommonUtil.createdBuildResponseMessage("Register success", HttpStatus.CREATED);
 		}
@@ -46,7 +46,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception{
 		
-		LoginResponse loginResposne=userService.login(loginRequest);
+		LoginResponse loginResposne=authService.login(loginRequest);
 		if(ObjectUtils.isEmpty(loginResposne)) {
 			return CommonUtil.createdErrorResponseMessage("invalid credential", HttpStatus.BAD_REQUEST);
 		}
