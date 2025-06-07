@@ -76,14 +76,14 @@ public class AuthServiceImpl implements AuthService{
 		User saveUser=userRepo.save(user);
 		if(!ObjectUtils.isEmpty(saveUser)) {
 			//send email 
-			emailSend(saveUser,url);
+			emailSendForRegister(saveUser,url);
 			return true;
 		}
 		return false;
 	}
 
 
-	private void emailSend(User saveUser, String url) throws Exception {
+	private void emailSendForRegister(User saveUser, String url) throws Exception {
 		
 		String message="Hi,<br>[[username]]</br> "
 				+ "<br>Your account register successfully.<br>"
@@ -94,7 +94,8 @@ public class AuthServiceImpl implements AuthService{
 		
 		
 		message=message.replace("[[username]]", saveUser.getFirstName());
-		message=message.replace("[[url]]", url+"/api/v1/home/verify?uid="+saveUser.getStatus().getVerifictionCode());
+		message=message.replace("[[url]]", url+"/api/v1/home/verify?uid="+saveUser.getId()+"&&code="
+		+saveUser.getStatus().getVerifictionCode());
 		
 		
 		
