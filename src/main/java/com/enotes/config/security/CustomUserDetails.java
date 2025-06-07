@@ -42,7 +42,7 @@ public class CustomUserDetails implements UserDetails{
 		return user.getEmail();
 	}
 
-	public Object getUser() {
+	public User getUser() {
 		
 		return user;
 	}
