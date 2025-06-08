@@ -49,7 +49,7 @@ public class SwaggerConfig {
 		openApi.setComponents(component);
 		openApi.setSecurity(List.of(new SecurityRequirement().addList("Token")));
 		
-		return null;
+		return openApi;
 		
 	}
 	
