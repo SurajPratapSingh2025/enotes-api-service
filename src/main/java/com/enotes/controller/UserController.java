@@ -4,7 +4,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.PasswordChangeRequest;
@@ -36,7 +35,7 @@ public class UserController implements UserEndpoint{
 	
 
 	@Override
-	public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest passwordRequest){
+	public ResponseEntity<?> changePassword(PasswordChangeRequest passwordRequest){
 		
 		userService.changePassword(passwordRequest);
 		return CommonUtil.createdBuildResponseMessage("Password change success", HttpStatus.OK);

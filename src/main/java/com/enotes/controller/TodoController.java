@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.TodoDto;
@@ -21,7 +20,7 @@ public class TodoController implements TodoEndpoint{
 	private TodoService todoService;
 	
 	@Override
-	public ResponseEntity<?> saveTodo(@RequestBody TodoDto todo) throws Exception{
+	public ResponseEntity<?> saveTodo(TodoDto todo) throws Exception{
 		Boolean saveTodo = todoService.saveTodo(todo);
 		if(saveTodo) {
 			return CommonUtil.createdBuildResponseMessage("Todo Saved Success", HttpStatus.CREATED);
@@ -33,7 +32,7 @@ public class TodoController implements TodoEndpoint{
 	
 	
 	@Override
-	public ResponseEntity<?> getTodoById(@RequestBody Integer id) throws Exception{
+	public ResponseEntity<?> getTodoById(Integer id) throws Exception{
 		
 		TodoDto todo = todoService.getTodoById(id);
 		return CommonUtil.createdBuildResponse(todo, HttpStatus.OK);

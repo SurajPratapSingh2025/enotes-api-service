@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.CategoryDto;
@@ -30,7 +28,7 @@ public class CategoryController implements CategoryEndpoint{
 	
 	@PostMapping("/save")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto){
+	public ResponseEntity<?> saveCategory(CategoryDto categoryDto){
 		
 		Boolean saveCategory = categoryService.saveCategory(categoryDto);
 		if(saveCategory) {
@@ -70,7 +68,7 @@ public class CategoryController implements CategoryEndpoint{
 	
 	
 	@Override
-	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<?> getCategoryDetailsById(Integer id) throws Exception{
 		
 		
 		CategoryDto categoryDto = categoryService.getCategoryById(id);
@@ -86,7 +84,7 @@ public class CategoryController implements CategoryEndpoint{
 	
 	
 	@Override
-	public ResponseEntity<?> deleteCategoryById(@PathVariable Integer id){
+	public ResponseEntity<?> deleteCategoryById(Integer id){
 		
 		Boolean deleted = categoryService.deleteCategory(id);
 		if(deleted) {
