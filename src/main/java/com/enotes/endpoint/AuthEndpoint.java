@@ -8,14 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.enotes.dto.LoginRequest;
 import com.enotes.dto.UserRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
+@Tag(name="Authenticaton",description="All the user Authentication APIs")
 @RequestMapping("/api/v1/auth")
 public interface AuthEndpoint {
 	
-	@PostMapping("/")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="201",description="Register Success"),
+			@ApiResponse(responseCode="500",description="Internal Server Error"),
+			@ApiResponse(responseCode="400",description="Bad Request")})
+	@Operation(summary="User Register Endpoint",tags= {"Authenticaton","Home"})
+	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody UserRequest userDto,HttpServletRequest request) throws Exception;
 	
+	@Operation(summary="User Login Endpoint",tags= {"Authenticaton","Home"})
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception;
 	

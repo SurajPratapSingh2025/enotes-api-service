@@ -1,0 +1,10 @@
+2025-08-26 21:26:09.517 ERROR [http-nio-9090-exec-10] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException() : No static resource v3/api-docs.
+2025-08-26 21:26:09.526 WARN  [http-nio-9090-exec-10] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource v3/api-docs.]
+2025-08-26 21:26:16.284 ERROR [http-nio-9090-exec-3] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException() : No static resource v3/api-docs.
+2025-08-26 21:26:16.286 WARN  [http-nio-9090-exec-3] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource v3/api-docs.]
+2025-08-26 21:26:17.882 ERROR [http-nio-9090-exec-5] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException() : No static resource v3/api-docs.
+2025-08-26 21:26:17.884 WARN  [http-nio-9090-exec-5] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource v3/api-docs.]
+2025-08-26 21:26:18.214 ERROR [http-nio-9090-exec-6] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException() : No static resource v3/api-docs.
+2025-08-26 21:26:18.216 WARN  [http-nio-9090-exec-6] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource v3/api-docs.]
+2025-08-26 21:26:19.215 ERROR [http-nio-9090-exec-7] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException() : No static resource v3/api-docs.
+2025-08-26 21:26:19.216 WARN  [http-nio-9090-exec-7] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource v3/api-docs.]
