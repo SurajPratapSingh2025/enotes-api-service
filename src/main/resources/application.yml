@@ -17,6 +17,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
     hibernate:
       ddl-auto: none    
   servlet:
@@ -41,7 +43,15 @@ springdoc:
       path: /enotes-doc
    api-docs:
       path: /enotes-api-doc
-
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+            exclude: beans,loggers
+   endpoint:
+      shutdown:
+         enabled: true
 file:
   upload:
     path: notes/
