@@ -1,0 +1,53 @@
+package com.enotes.dto;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserRequest {
+	
+	
+	private Integer id;
+	
+	private String firstName;
+	
+	private String lastName;
+	
+	private String email;
+	
+	private String mobNo;
+	
+	private String password;
+	
+	private List<RoleDto> roles;
+	
+	
+	@Setter
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class RoleDto{
+		private Integer id;
+		
+		private String name;
+	}
+	
+	
+	
+	
+	
+
+}
+
+
