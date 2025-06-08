@@ -8,16 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
+import com.enotes.endpoint.CategoryEndpoint;
 import com.enotes.service.CategoryService;
 import com.enotes.util.CommonUtil;
 
@@ -25,8 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/category")
-public class CategoryController {
+public class CategoryController implements CategoryEndpoint{
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -45,8 +42,7 @@ public class CategoryController {
 		}
 	}
 	
-	@GetMapping("/")
-	@PreAuthorize("hasRole('ADMIN')")
+	@Override
 	public ResponseEntity<?> getAllCategory(){
 		
 		List<CategoryDto> allCategory=categoryService.getAllCategory();
@@ -60,8 +56,7 @@ public class CategoryController {
 	}
 	
 	
-	@GetMapping("/active")
-	@PreAuthorize("hasRole('USER','ADMIN')")
+	@Override
 	public ResponseEntity<?> getActiveCategory(){
 		List<CategoryResponse> allCategory=categoryService.getActiveCategory();
 		
@@ -74,8 +69,7 @@ public class CategoryController {
 	}
 	
 	
-	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@Override
 	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws Exception{
 		
 		
@@ -91,8 +85,7 @@ public class CategoryController {
 	}
 	
 	
-	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@Override
 	public ResponseEntity<?> deleteCategoryById(@PathVariable Integer id){
 		
 		Boolean deleted = categoryService.deleteCategory(id);
