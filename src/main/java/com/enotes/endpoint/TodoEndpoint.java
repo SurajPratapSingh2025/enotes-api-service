@@ -9,17 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.enotes.dto.TodoDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
+@Tag(name="Todo",description="All the Todo Operation APIs")
 @RequestMapping("/api/v1/todo")
 public interface TodoEndpoint {
 	
+	@Operation(summary="Save Todo",tags= {"Todo"},description="Save Todo")
 	@PostMapping("/")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> saveTodo(@RequestBody TodoDto todo) throws Exception;
 	
+	@Operation(summary="Get Todo",tags= {"Todo"},description="Get Todo")
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getTodoById(@RequestBody Integer id) throws Exception;
 	
+	@Operation(summary="Get All Todo",tags= {"Todo"},description="Get All Todo by User")
 	@GetMapping("/list")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getAllTodoByUser() throws Exception;
