@@ -27,7 +27,9 @@ import com.enotes.service.AuthService;
 import com.enotes.service.JwtService;
 import com.enotes.util.Validation;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AuthServiceImpl implements AuthService{
 	
@@ -57,7 +59,7 @@ public class AuthServiceImpl implements AuthService{
 
 	@Override
 	public Boolean register(UserRequest userDto,String url) throws Exception {
-		
+		log.info("AuthServiceImpl : register() : Execution Start");
 		validation.userValidation(userDto);
 		User user = mapper.map(userDto, User.class);
 		
@@ -74,12 +76,16 @@ public class AuthServiceImpl implements AuthService{
 		
 		
 		User saveUser=userRepo.save(user);
-		if(!ObjectUtils.isEmpty(saveUser)) {
-			//send email 
-			emailSendForRegister(saveUser,url);
-			return true;
+		if(ObjectUtils.isEmpty(saveUser)) {
+			log.info("Error : {}","user not saved");
+			return false;
 		}
-		return false;
+		log.info("Message : {}","User Register success");
+		//send email 
+		emailSendForRegister(saveUser,url);
+		log.info("Message : {}","email send success");
+		log.info("AuthServiceImpl : register() : Execution Start");
+		return true;
 	}
 
 

@@ -1,7 +1,7 @@
 package com.enotes.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.enotes.entity.AccountStatus;
 import com.enotes.entity.User;
@@ -10,7 +10,10 @@ import com.enotes.exception.SuccessException;
 import com.enotes.repository.UserRepository;
 import com.enotes.service.HomeService;
 
-@Service
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Component
 public class HomeServiceImpl implements HomeService{
 	
 	@Autowired
@@ -18,10 +21,11 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public Boolean verifyAccount(Integer userId, String verificationCode) throws Exception {
-		
+		log.info("HomeServiceImpl : verifyAccount() : start");
 		User user = userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("invalid user"));
 		
 		if(user.getStatus().getVerifictionCode() == null) {
+			log.info("message : Account already verified");
 			throw new SuccessException("Account already verified");
 		}
 		
@@ -31,9 +35,10 @@ public class HomeServiceImpl implements HomeService{
 			status.setVerifictionCode(null);
 			
 			userRepo.save(user);
+			log.info("message: Account verification success");
 			return true;
 		}
-		
+		log.info("HomeServiceImpl : verifyAccount() : End");
 		return false;
 	}
 
