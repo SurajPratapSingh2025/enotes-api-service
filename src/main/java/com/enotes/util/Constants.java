@@ -8,6 +8,23 @@ public class Constants {
 	
 	
 	
+	public static final String ROLE_ADMIN="hasRole('ADMIN')";
+	public static final String ROLE_USER="hasRole('USER')";
+	public static final String ROLE_ADMIN_USER="hasRole('USER','ADMIN')";
+	
+//	import static com.enotes.util.Constants.ROLE_ADMIN;
+//	import static com.enotes.util.Constants.ROLE_USER;
+//	import static com.enotes.util.Constants.ROLE_ADMIN_USER;
+	
+	
+	
+	public static final String DEFAULT_PAGE_NO="0";
+	public static final String DEFAULT_PAGE_SIZE="10";
+	
+//	import static com.enotes.util.Constants.DEFAULT_PAGE_NO;
+//	import static com.enotes.util.Constants.DEFAULT_PAGE_SIZE;
+	
+	
 	
 
 }
